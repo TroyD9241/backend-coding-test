@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha ./tests/api.test.js",
+    "test": "DEBUG=true nyc mocha ./tests/api.test.js --exit --inspect=0.0.0.0:9229",
     "start": "node index.js",
     "coverage": "nyc npm run test"
   },
