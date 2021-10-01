@@ -1,11 +1,9 @@
-var winston = require('winston');
+const appRoot = require('app-root-path')
+const winston = require('winston');
 
-winston.configure({
-    transports: [
-        new (winston.transports.File)({ filename: 'somefile.log' })
-    ]
-});
 
-let logger = new (winston.Logger)({
-    exitEr
-})
+winston.add(new winston.transports.File({ filename: 'report.log', level: 'info', handleException: true, maxsize: 5242880, maxFiles: 10 }))
+
+
+winston.info('Info message');
+winston.log('Hi this is a test', 'info')
