@@ -18,6 +18,8 @@ module.exports = (db) => {
         const driverName = req.body.driver_name;
         const driverVehicle = req.body.driver_vehicle;
 
+        console.log(startLatitude)
+
 
         if (startLatitude < -90 || startLatitude > 90 || startLongitude < -180 || startLongitude > 180) {
             return res.send({

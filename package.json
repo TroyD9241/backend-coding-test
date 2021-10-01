@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "DEBUG=true nyc mocha ./tests/api.test.js --exit --inspect=0.0.0.0:9229",
-    "start": "node index.js",
+    "start": "nodemon node index.js",
     "coverage": "nyc npm run test"
   },
   "keywords": [
@@ -29,6 +29,7 @@
     "eslint-plugin-import": "^2.24.2",
     "husky": "^7.0.2",
     "mocha": "^6.1.4",
+    "nodemon": "^2.0.13",
     "nyc": "^15.1.0",
     "supertest": "^4.0.2"
   },

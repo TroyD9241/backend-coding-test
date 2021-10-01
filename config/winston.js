@@ -1,54 +1,21 @@
-const appRoot = require('app-root-path')
-const { createLogger, format, transports } = require('winston')
-const { combine, splat, timestamp, printf, simple, label } = format
+const { format, createLogger, transports } = require('winston');
+const { timestamp, combine, printf, colorize, errors } = format
 
-const myFormat = printf(({ level, message, timestamp, ...metadata }) => {
-    let msg = `${timestamp} [${level}] : ${message}`
-    if (metadata) {
-        msg += JSON.stringify(metadata)
-    }
-    return msg
+const logFormat = printf(({ level, message, timestamp, stack }) => {
+    return `${timestamp} ${level}: ${message} || ${stack}`
 })
 
-const options = {
-    file: {
-        level: 'debug',
-        name: 'file.info',
-        filename: `${appRoot}/logs/app.log`,
-        handleException: true,
-        json: true,
-        maxsize: 5242880,
-        maxFiles: 100,
-        colorize: true
-    },
-    console: {
-        level: 'debug',
-        handleException: true,
-        json: false,
-        colorize: true
-    },
-}
-
-const logger = new createLogger({
+const logger = createLogger({
     format: combine(
-        label({ label: 'CUSTOM', message: true }),
-        timestamp(),
-        simple()
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        errors({ stack: true }),
+        logFormat,
     ),
-    format: combine(
-        format.colorize(),
-        splat(),
-        timestamp(),
-        myFormat
-    ),
+    defaultMeta: { service: 'user-services' },
     transports: [
-        new transports.Console(options.console),
-        new transports.File(options.file),
-
+        new transports.Console(),
+        new transports.File({ filename: './logs/app.log' })
     ],
-})
-
-logger.info('HII')
-logger.error('Errors!')
+});
 
 module.exports = logger
