@@ -1,4 +1,5 @@
 'use strict';
+const logger = require('./config/winston')
 
 const express = require('express');
 const app = express();
@@ -11,6 +12,7 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database(':memory:');
 
 const buildSchemas = require('./src/schemas');
+const winston = require('winston');
 
 db.serialize(() => {
     buildSchemas(db);

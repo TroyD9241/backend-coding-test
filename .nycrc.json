@@ -1,0 +1,13 @@
+{
+    "nyc": {
+        "all": true,
+        "include":[
+            "tests/**.js"
+        ],
+        "exclude": [],
+        "check-coverage": true,
+        "branches":80,
+        "lines": 80,
+        "statement": 80
+    }
+}

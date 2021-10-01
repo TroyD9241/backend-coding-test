@@ -1,11 +1,21 @@
-var winston = require('winston');
+const { format, createLogger, transports } = require('winston');
+const { timestamp, combine, printf, colorize, errors } = format
 
-winston.configure({
+const logFormat = printf(({ level, message, timestamp, stack }) => {
+    return `${timestamp} ${level}: ${message} || ${stack}`
+})
+
+const logger = createLogger({
+    format: combine(
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        errors({ stack: true }),
+        logFormat,
+    ),
+    defaultMeta: { service: 'user-services' },
     transports: [
-        new (winston.transports.File)({ filename: 'somefile.log' })
-    ]
+        new transports.Console(),
+        new transports.File({ filename: './logs/app.log' })
+    ],
 });
 
-let logger = new (winston.Logger)({
-    exitEr
-})
+module.exports = logger
