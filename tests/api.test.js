@@ -31,4 +31,6 @@ describe('API tests', () => {
     });
 });
 
-describe('Rides Post')
+// describe('Rides Post', () => {
+//     startLatitude = N
+// })
